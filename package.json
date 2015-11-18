@@ -1,0 +1,26 @@
+{
+  "name": "node-im-server",
+  "version": "0.1.0",
+  "description": "Instant Messenger server with Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test",
+    "start": "node ./server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabionaka/node-im-server.git"
+  },
+  "author": "Fábio Nakatani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fabionaka/node-im-server/issues"
+  },
+  "homepage": "https://github.com/fabionaka/node-im-server#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "path": "^0.12.7",
+    "socket.io": "^1.3.7",
+    "socket.io-client": "^1.3.7"
+  }
+}
