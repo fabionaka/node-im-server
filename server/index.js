@@ -1,4 +1,5 @@
-var app = require('express')(),
+var express = require('express'),
+        app = express(),
         http = require('http').Server(app),
         io = require('socket.io')(http),
         path = require('path'),
@@ -8,9 +9,13 @@ var app = require('express')(),
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '../', 'client', 'index.html'));
 });
+app.use('/app', express.static(path.join(__dirname, '../', 'client', 'app')));
 
-//io.emit('some event', {for : 'everyone'});
 
+//setInterval(function(){
+//    console.log(clients)
+//},
+//5000)
 
 //connection
 io.on('connection', function (socket) {
@@ -46,9 +51,28 @@ io.on('connection', function (socket) {
         socket.broadcast.emit('update-users', clients);
     });
 
+    socket.on('request-user-list', function (data) {
+        if (clients[data.username]) {
+            io.sockets.connected[clients[data.username].socket].emit('update-users', clients);
+            console.log('[Request] Users Udate from:', clients[data.username].alias);
+        } else {
+            console.log("User does not exist: " + data.username);
+        }
+    })
+
 //message
     socket.on('chat message', function (msg) {
         io.emit('chat message', msg);
+    });
+    
+    // Send private message
+    socket.on('send-pvt-message', function(data){
+        console.log(data);
+        if (clients[data.to]) {
+            io.sockets.connected[clients[data.to].socket].emit("pvt-message", data);
+        } else {
+            console.log("User does not exist: " + data.to);
+        }
     });
 
 
@@ -56,6 +80,7 @@ io.on('connection', function (socket) {
     socket.on('disconnect', function () {
         socket.broadcast.emit('user_disconnect');
     });
+    
 });
 
 http.listen(3000, function () {

@@ -1,0 +1,88 @@
+<div class="content" ng-show="hasIMuser">
+    <div class="users-list">
+        <ul>
+            <li ng-repeat="user in users" ng-click="startChat(user)">
+                <div>{{user.name}}</div>
+                <div>{{user.alias}}</div>
+            </li>
+        </ul>
+    </div>
+    <div class="conversation-container">
+        <div class="conversation-window" ng-repeat="conversation in conversations">
+            <header>
+                <h4>{{conversation.to}}</h4>
+                <span>{{conversation.date| date:"dd/MM/yyyy 'at' h:mma"}}</span>
+            </header>
+            <main>
+                <ul>
+
+                    <li ng-repeat="message in conversation.messages">{{message.message}}</li>
+                </ul>
+                <div class="textarea">
+                    <form ng-submit="sendMessage(msg, conversation.to, conversation.socket)" >
+                        <textarea ng-model="msg"></textarea>
+                        <input type="submit">
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+<style>
+    .content {
+        display: flex; 
+    }
+    .users-list {
+        flex-grow: 1;
+        background: #f2f2f2;
+    }
+    .conversation-container {
+        flex-grow: 5;
+        background: #e2e2e2;
+    }
+</style>
+
+
+
+
+<div class="modal" ng-show="!hasIMuser">
+    <header>
+        <button class="close">Close
+        </button>
+    </header>
+    <main>
+        <form ng-submit="submitUsser(user)" ng-model="user">
+            <label>Login de rede 
+                <input type="text" name="username" ng-model="user.username" /></label>
+            <label>Nome 
+                <input type="text" name="name" ng-model="user.name" /></label>
+            <button>enviar</button>
+        </form>
+    </main>
+</div>
+<style>
+    .modal {
+        background:#f2f2f2;
+        padding: 2em;
+        position: fixed;
+
+        top: 1em;
+        bottom: 1em;
+        left: 1em;
+        right: 1em;
+    }
+    .modal.ng-enter {
+        opacity:0;
+        transition: 0.25s all;
+    }
+    .modal.ng-enter.ng-enter-active {
+        opacity: 1;
+    }
+    .modal.ng-leave {
+        opacity: 1;
+        transition: 0.25s all;
+    }
+    .modal.ng-leave.ng-leave-active {
+        opacity:0;
+    }
+</style>
