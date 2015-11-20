@@ -52,7 +52,6 @@ angular.element(document).ready(function () {
                 });
 
                 $rootScope.$on('pvt-msg', function (event, data) {
-
                     if (typeof $filter('filter')($scope.conversations, data.socket)[0] === 'undefined') {
                         $scope.startChat({alias: data.from.alias, socket: data.from.socket});
                     }

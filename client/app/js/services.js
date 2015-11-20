@@ -16,7 +16,7 @@ angular.element(document).ready(function () {
                 service.socket = socket;
                 service.IMUser = {};
                 service.IMUsers = false;
-                service.timeInterval = 2500;
+                service.timeInterval = 5000;
 
                 // Init client in Server
                 service.setIMUser = function (fnUserInfo) {

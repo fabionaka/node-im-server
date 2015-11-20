@@ -24,7 +24,7 @@
                 </ul>
                 <div class="textarea">
                     <form ng-submit="sendMessage(msg, conversation.to, conversation.socket)" >
-                        <input type="text" ng-model="msg" />
+                        <input type="text" ng-model="msg" focus-me="true" form-submit />
                         <input type="submit">
                     </form>{{msg}}
                 </div>
