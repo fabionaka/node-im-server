@@ -23,7 +23,8 @@ angular.element(document).ready(function () {
                     angular.extend(service.IMUser, {
                         "username": fnUserInfo.username,
                         "alias": fnUserInfo.username,
-                        "name": fnUserInfo.name
+                        "name": fnUserInfo.name,
+                        "socket": socket.id
                     });
                     return service.addUser({"username": fnUserInfo.username, "name": fnUserInfo.name});
                 };
@@ -73,10 +74,15 @@ angular.element(document).ready(function () {
                 service.sendPvtMessage = (function (data) {
                     socket.emit('send-pvt-message', {
                         "msg": data.message,
-                        "from": service.IMUser.alias,
-                        "to": data.to,
-                        "date": data.date,
-                        "socket": data.socket
+                        "to": {
+                            "alias": data.to,
+                            "socket": data.socket
+                        },
+                        "from": {
+                            "alias": service.IMUser.alias,
+                            "socket": data.socketFrom
+                        },
+                        "date": data.date
                     });
                 });
 

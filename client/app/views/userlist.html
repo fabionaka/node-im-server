@@ -16,13 +16,17 @@
             <main>
                 <ul>
 
-                    <li ng-repeat="message in conversation.messages">{{message.message}}</li>
+                    <li class="animate-message" ng-repeat="message in conversation.messages">
+                        <span ng-if="message.submitted">to: {{message.to}}</span>
+                        <span ng-if="!message.submitted">from: {{message.from}}</span>
+                        <div class="message">{{message.message}}</div>
+                    </li>
                 </ul>
                 <div class="textarea">
                     <form ng-submit="sendMessage(msg, conversation.to, conversation.socket)" >
-                        <textarea ng-model="msg"></textarea>
+                        <input type="text" ng-model="msg" />
                         <input type="submit">
-                    </form>
+                    </form>{{msg}}
                 </div>
             </main>
         </div>
@@ -37,8 +41,54 @@
         background: #f2f2f2;
     }
     .conversation-container {
+        padding-top: 2em;
         flex-grow: 5;
+        display: flex; 
         background: #e2e2e2;
+    }
+
+    .conversation-window {
+        flex-grow: 1;
+        max-width: 250px;
+        padding: 1em 1em 0 1em;
+        background: #fff;
+        margin: 0 10px;
+        border-radius: 1em 1em 0 0;
+    }
+    .conversation-window header h4 {
+        margin: 0;
+    }
+
+    .conversation-window ul, .conversation-window ul li { margin: 0; padding: 0;list-style: none;}
+    .conversation-window ul li {
+        padding: 5px;
+        
+    }
+    .conversation-window ul li:nth-child(even) {
+        background-color: pink;
+    }
+    .conversation-window ul li:nth-child(odd) {
+        background-color: wheat;
+    }
+
+    .animate-message {padding:10px;}
+    .conversation-window.ng-enter, .conversation-window.ng-leave,
+    .animate-message.ng-enter, .animate-message.ng-leave {
+        transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    }
+
+    .conversation-window.ng-enter,
+    .conversation-window.ng-leave-active,
+    .animate-message.ng-enter,
+    .animate-message.ng-leave.ng-leave-active {
+        opacity:0;
+    }
+
+    .conversation-window.ng-leave,
+    .conversation-window.ng-enter.ng-enter-active,
+    .animate-message.ng-leave,
+    .animate-message.ng-enter.ng-enter-active{
+        opacity:1;
     }
 </style>
 

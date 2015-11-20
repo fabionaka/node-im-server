@@ -4,6 +4,7 @@
   "description": "Instant Messenger server with Node.js",
   "main": "index.js",
   "scripts": {
+      "postinstall": "cd ./client/app  &&  npm install",
     "test": "gulp test",
     "start": "node ./server/index.js"
   },

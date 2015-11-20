@@ -68,10 +68,10 @@ io.on('connection', function (socket) {
     // Send private message
     socket.on('send-pvt-message', function(data){
         console.log(data);
-        if (clients[data.to]) {
-            io.sockets.connected[clients[data.to].socket].emit("pvt-message", data);
+        if (clients[data.to.alias]) {
+            io.sockets.connected[clients[data.to.alias].socket].emit("pvt-message", data);
         } else {
-            console.log("User does not exist: " + data.to);
+            console.log("User does not exist: " + data.to.alias);
         }
     });
 
